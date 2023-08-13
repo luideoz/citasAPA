@@ -108,15 +108,10 @@ class IMain:
         self.autores_text = ttk.Combobox(self.articulos_frame, font=('Comic Sans',20),background='white',foreground='black',values=autores, state='readonly')
         self.autores_text.pack()
         
-        self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2)
+        self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.insertarArticulo)
         self.insertArticulo_button.pack(pady=10)
         self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2)
         self.deleteArticulo_button.pack(pady=10)
-        
-        
-        
-        
-        
         
         self.window.mainloop()
     
@@ -128,11 +123,13 @@ class IMain:
             try:
                 autor.insert()
                 self.list_autores.delete(0,END)
+                self.autores_text['values'] = []
                 autores = controlCitas.selectAutores()
                 for index in range(len(autores)):
                     self.list_autores.insert(self.list_autores.size(),autores[index])
                 messagebox.showinfo(title='Insercion',message='Exito al insertar')
                 self.name_text.delete(0,END)
+                self.autores_text.config(values=autores)
                 self.subname_text.delete(0,END)
             except Exception:
                 messagebox.showerror(title='Insercion',message='Fallo al insertar autor')
@@ -159,10 +156,12 @@ class IMain:
                     autor.delete()
                     messagebox.showinfo(title='Eliminar',message='Eliminado correctamente')
                     self.list_autores.delete(0,END)
+                    self.autores_text['values'] = []
                     autores = controlCitas.selectAutores()
                     for index in range(len(autores)):
                         self.list_autores.insert(self.list_autores.size(),autores[index])
                     self.name_text.delete(0,END)
+                    self.autores_text.config(values=autores)
                     self.subname_text.delete(0,END)
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Se ha producido un error')
@@ -185,8 +184,10 @@ class IMain:
                 editorial.insert()
                 messagebox.showinfo(title='Insertar',message='Exito al insertar')
                 self.nombreEditorial_text.delete(0,END)
+                self.editorial_text['values'] = []
                 self.list_editorial.delete(0,END)
                 editoriales = controlCitas.selectEditoriales()
+                self.editorial_text.config(values=editoriales)
                 for index in range(len(editoriales)):
                     self.list_editorial.insert(self.list_editorial.size(),editoriales[index])
             except Exception:
@@ -202,11 +203,32 @@ class IMain:
                     editorial.Delete()
                     messagebox.showinfo(title='Eliminar',message='Eliminado con exito')
                     self.nombreEditorial_text.delete(0,END)
+                    self.editorial_text['values'] = []
                     self.list_editorial.delete(0,END)
                     editoriales = controlCitas.selectEditoriales()
+                    self.editorial_text.config(values=editoriales)
                     for index in range(len(editoriales)):
                         self.list_editorial.insert(self.list_editorial.size(),editoriales[index])
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Error al eliminar')
         else:
             messagebox.showerror(title='Eliminar',message='Error, nombre vacio')
+    
+    def insertarArticulo(self):
+        if self.articuloName_text.get() != '' and self.edicion_text.get() != '' and self.año_text.get() != '' and self.lugar_text.get() != '' and self.editorial_text.get() != '' and self.autores_text.get() != '':
+            articulo = Articulos.Articulos(self.articuloName_text.get(),self.año_text.get(),self.edicion_text.get(),self.lugar_text.get(),self.editorial_text.get())
+            try:
+                articulo.insert()
+                partes = self.autores_text.get().split()
+                articulo.insertArticulo_autor(partes[1],partes[0])
+                self.articuloName_text.delete(0,END)
+                self.año_text.delete(0,END)
+                self.edicion_text.delete(0,END)
+                self.lugar_text.delete(0,END)
+                self.editorial_text.delete(0,END)
+                self.autores_text.delete(0,END)
+                messagebox.showinfo(title='Insertar',message='Insertado con exito')
+            except Exception:
+                messagebox.showerror(title='Insertar',message='Error al insertar')
+        else:
+            messagebox.showerror(title='Insertar',message='Error. Faltan Campos')
