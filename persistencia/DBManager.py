@@ -17,10 +17,18 @@ def InsertEditorial(nombre):
     conn.commit()
     conn.close()
 
-def InsertArticulo(nombre,año,edicion,nombreA,apellidoA,editorial):
+def InsertArticulo(nombre,año,edicion,lugar,editorial):
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
-    instruction = f"INSERT INTO articulos VALUES ('{nombre}',{int(año)},{int(edicion)},'{nombreA}','{apellidoA}','{editorial}')"
+    instruction = f"INSERT INTO articulos VALUES ('{nombre}',{int(año)},{int(edicion)},'{lugar}','{editorial}')"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+
+def InsertAutor_Articulo(nombreA,apellidoA,articulo):
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction = f"INSERT INTO autor_articulo VALUES ('{nombreA}','{apellidoA}','{articulo}')"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -29,7 +37,7 @@ def InsertArticulo(nombre,año,edicion,nombreA,apellidoA,editorial):
 def createAutores():
     conn = sql.connect('autores.db')
     cursor = conn.cursor()
-    instruction = "CREATE TABLE autores( nombre text, apellido text, PRIMARY KEY(nombre,apellido))"
+    instruction = "CREATE TABLE autores( nombre text NOT NULL, apellido text NOT NULL, PRIMARY KEY(nombre,apellido))"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -37,7 +45,7 @@ def createAutores():
 def createArticulos():
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
-    instruction = "CREATE TABLE articulos(nombre text PRIMARY KEY, año integer, Edicion integer, nombreA text, apellidoA text, editorial text, FOREIGN KEY (nombreA,apellidoA) REFERENCES autores(nombre,apellido) ON DELETE CASCADE, FOREIGN KEY(editorial) REFERENCES editoriales(nombre) ON DELETE CASCADE)"
+    instruction = "CREATE TABLE articulos(nombre text PRIMARY KEY NOT NULL, año integer NOT NULL, Edicion integer NOT NULL,lugar text NOT NULL,editorial text NOT NULL, FOREIGN KEY(editorial) REFERENCES editoriales(nombre) ON DELETE CASCADE)"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -45,7 +53,17 @@ def createArticulos():
 def createEditoriales():
     conn = sql.connect('editoriales.db')
     cursor = conn.cursor()
-    instruction = "CREATE TABLE editoriales(nombre text PRIMARY KEY)"
+    instruction = "CREATE TABLE editoriales(nombre text PRIMARY KEY NOT NULL)"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+
+def createAutor_Articulo():
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction = "PRAGMA foreign_keys = ON"
+    cursor.execute(instruction)
+    instruction = "CREATE TABLE autor_articulo (nombre_autor TEXT, apellido_autor TEXT,nombre_articulo TEXT,PRIMARY KEY (nombre_autor, apellido_autor, nombre_articulo),FOREIGN KEY (nombre_autor, apellido_autor) REFERENCES autores(nombre, apellido),FOREIGN KEY (nombre_articulo) REFERENCES articulos(nombre))"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -71,14 +89,6 @@ def deleteArticulo(nombre):
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
     instruction = f"DELETE FROM articulos WHERE nombre='{nombre}'"
-    cursor.execute(instruction)
-    conn.commit()
-    conn.close()
-
-def deleteArticulo_autor(nombre,apellido):
-    conn = sql.connect('articulos.db')
-    cursor = conn.cursor()
-    instruction = f"DELETE FROM articulos WHERE nombreA='{nombre}' and apellidoA = '{apellido}'"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -109,6 +119,13 @@ def deleteAll():
     conn = sql.connect('editoriales.db')
     cursor = conn.cursor()
     instruction3 = "DELETE FROM editoriales"
+    cursor.execute(instruction3)
+    conn.commit()
+    conn.close()
+    
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction3 = "DELETE FROM autor_articulo"
     cursor.execute(instruction3)
     conn.commit()
     conn.close()

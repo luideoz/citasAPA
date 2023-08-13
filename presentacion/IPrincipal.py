@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-from presentacion import IMenu
+from presentacion import IMain
 from dominio import controlCitas
 
 class IPrincipal:
@@ -25,7 +25,7 @@ class IPrincipal:
         
     def changeWindow(self):
         self.window.destroy()
-        IMenu.IMenu()
+        IMain.IMain()
     
     def deleteAll(self):
         if messagebox.askyesno(title='Reiniciar',message='¿Seguro que desea reiniciar los datos?'):
