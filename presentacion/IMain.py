@@ -10,7 +10,7 @@ class IMain:
         
         self.window = Tk()
         self.window.title('APA Creator')
-        self.window.geometry('900x900')
+        self.window.geometry('720x720')
         self.window.config(bg = 'pink')
         
         self.tabs = ttk.Notebook(self.window)
@@ -78,26 +78,41 @@ class IMain:
         self.deleteEditorial_button.pack()
         
         #***ARTICULOS FRAME***
-        self.title_label = Label(self.articulos_frame, text='Articulos', fg='black', bg='pink', font=('Comic Sans',20))
-        self.title_label.pack(padx=40,pady=0,anchor='w')
         self.list_articulos = Listbox(self.articulos_frame, fg='black',bg='white',font=('Comic Sans',20),height=50,width=20)
-        self.list_articulos.pack(side='left',anchor='nw',padx=0,pady=0)
+        self.list_articulos.pack(side='left',anchor='w',padx=0,pady=0)
         
+        self.articuloName_label = Label(self.articulos_frame, text='Nombre',font=('Comic Sans',20),bg='pink',fg='black')
+        self.articuloName_label.pack()
+        self.articuloName_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.articuloName_text.pack()
+        self.edicion_label = Label(self.articulos_frame, text='Edicion',font=('Comic Sans',20),bg='pink',fg='black')
+        self.edicion_label.pack()
+        self.edicion_text = Entry(self.articulos_frame, bg='white', fg='black', font=('Comic Sans',20))
+        self.edicion_text.pack()
+        self.año_label = Label(self.articulos_frame, text='Año',font=('Comic Sans',20),bg='pink',fg='black')
+        self.año_label.pack()
+        self.año_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.año_text.pack()
+        self.lugar_label = Label(self.articulos_frame, text='Lugar de edicion', font=('Comic Sans',20),bg='pink',fg='black')
+        self.lugar_label.pack()
+        self.lugar_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.lugar_text.pack()
+        self.editorial_label = Label(self.articulos_frame,text='Editorial',bg='pink',fg='black',font=('Comic Sans',20))
+        self.editorial_label.pack()
+        editoriales = controlCitas.selectEditoriales()
+        self.editorial_text = ttk.Combobox(self.articulos_frame, foreground='black',background='white',font=('Comic Sans',20),values=editoriales,state='readonly')
+        self.editorial_text.pack()
+        self.autores_label = Label(self.articulos_frame, font=('Comic Sans',20),bg='pink',fg='black',text='Autor')
+        self.autores_label.pack()
+        autores = controlCitas.selectAutores()
+        self.autores_text = ttk.Combobox(self.articulos_frame, font=('Comic Sans',20),background='white',foreground='black',values=autores, state='readonly')
+        self.autores_text.pack()
         
-        articulos = controlCitas.selectArticulos()
-        for index in range(len(articulos)):
-            self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+        self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2)
+        self.insertArticulo_button.pack(pady=10)
+        self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2)
+        self.deleteArticulo_button.pack(pady=10)
         
-        self.autores_label = Label(self.articulos_frame, text='Autores', fg='black', bg='pink', font=('Comic Sans',20))
-        self.autores_label.pack(anchor='w',pady=0,padx=80,side='top')
-        self.listArticulos_autores = Listbox(self.articulos_frame, font=('Comic Sans',20),bg='white',fg='black',width=20,height=50)
-        self.listArticulos_autores.pack(side='top',anchor='nw',padx=5, pady=0)
-        
-        self.articuloName_label = Label(self.articulos_frame, text='Nombre',font=('Comic Sans',20),fg='black',bg='pink')
-        self.articuloName_label.pack(side='right')
-        
-        #self.articuloName_text = Entry(self.articulos_frame, fg='black',bg='white',font=('Comic Sans',20))
-        #self.articuloName_text.pack()
         
         
         
