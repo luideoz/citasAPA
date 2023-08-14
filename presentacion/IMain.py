@@ -219,15 +219,19 @@ class IMain:
         if self.articuloName_text.get() != '' and self.edicion_text.get() != '' and self.año_text.get() != '' and self.lugar_text.get() != '' and self.editorial_text.get() != '' and self.autores_text.get() != '':
             articulo = Articulos.Articulos(self.articuloName_text.get(),self.año_text.get(),self.edicion_text.get(),self.lugar_text.get(),self.editorial_text.get())
             try:
+                self.list_articulos.delete(0,END)
                 articulo.insert()
                 partes = self.autores_text.get().split()
                 articulo.insertArticulo_autor(partes[1],partes[0])
+                articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
+                for index in range(len(articulos)):
+                    self.list_articulos.insert(self.list_articulos.size(),articulos[index])
                 self.articuloName_text.delete(0,END)
                 self.año_text.delete(0,END)
                 self.edicion_text.delete(0,END)
                 self.lugar_text.delete(0,END)
-                self.editorial_text.delete(0,END)
-                self.autores_text.delete(0,END)
+                self.editorial_text.set('')
+                self.autores_text.set('')
                 messagebox.showinfo(title='Insertar',message='Insertado con exito')
             except Exception:
                 messagebox.showerror(title='Insertar',message='Error al insertar')
@@ -239,6 +243,6 @@ class IMain:
         if nombre_apellido:
             partes = nombre_apellido.split()
             self.list_articulos.delete(0,END)
-            articulos = controlCitas.selectArticulos_Autor(partes[1])
+            articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
             for index in range(len(articulos)):
                 self.list_articulos.insert(self.list_articulos.size(),articulos[index])

@@ -162,10 +162,10 @@ def selectArticulos():
     conn.close()
     return datos
 
-def selectArticulos_Autor(nombreA):
+def selectArticulos_Autor(nombreA,apellidoA):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
-    instruccion = f"SELECT DISTINCT nombre_articulo FROM autor_articulo WHERE nombre_autor='{nombreA}' ORDER BY nombre_articulo"
+    instruccion = f"SELECT DISTINCT nombre_articulo FROM autor_articulo WHERE nombre_autor='{nombreA}' AND apellido_autor= '{apellidoA}' ORDER BY nombre_articulo"
     cursor.execute(instruccion)
     datos = cursor.fetchall() #para devolver la lista con los campos
     conn.commit()
