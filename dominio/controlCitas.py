@@ -23,6 +23,16 @@ def selectEditoriales():
     
     return editoriales_procesado
 
+def selectArticulos_Autor(nombre):
+    articulos = DBManager.selectArticulos_Autor(nombreA=nombre)
+    articulos_procesados = []
+    
+    for index in range(len(articulos)):
+        articulo = articulos[index]
+        articulos_procesados.append(articulo)
+    
+    return articulos_procesados
+
 def selectArticulos():
     articulos = DBManager.selectArticulos()
     articulos_procesados = []

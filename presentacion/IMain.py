@@ -107,6 +107,7 @@ class IMain:
         autores = controlCitas.selectAutores()
         self.autores_text = ttk.Combobox(self.articulos_frame, font=('Comic Sans',20),background='white',foreground='black',values=autores, state='readonly')
         self.autores_text.pack()
+        self.autores_text.bind("<<ComboboxSelected>>",self.rellenarArticulo)
         
         self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.insertarArticulo)
         self.insertArticulo_button.pack(pady=10)
@@ -232,3 +233,12 @@ class IMain:
                 messagebox.showerror(title='Insertar',message='Error al insertar')
         else:
             messagebox.showerror(title='Insertar',message='Error. Faltan Campos')
+    
+    def rellenarArticulo(self,event):
+        nombre_apellido = self.autores_text.get()
+        if nombre_apellido:
+            partes = nombre_apellido.split()
+            self.list_articulos.delete(0,END)
+            articulos = controlCitas.selectArticulos_Autor(partes[1])
+            for index in range(len(articulos)):
+                self.list_articulos.insert(self.list_articulos.size(),articulos[index])
