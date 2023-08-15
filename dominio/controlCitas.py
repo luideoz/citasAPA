@@ -37,7 +37,7 @@ def selectArticulos():
     articulos = DBManager.selectArticulos()
     articulos_procesados = []
     for index in range(len(articulos)):
-        nombre = articulos[index]
+        nombre = articulos[index][0]
         articulos_procesados.append(nombre)
     return articulos_procesados
 

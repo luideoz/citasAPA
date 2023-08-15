@@ -220,7 +220,7 @@ class IMain:
             partes = self.autores_text.get().split()
             articulo = Articulos.Articulos(self.articuloName_text.get(),self.año_text.get(),self.edicion_text.get(),self.lugar_text.get(),self.editorial_text.get())
             articulos = controlCitas.selectArticulos()
-            if articulo in articulos:
+            if articulo.nombre in articulos:
                     try:
                         articulo.insertArticulo_autor(partes[1],partes[0])
                         messagebox.showinfo(title='Insertar',message='Insertado con exito')
