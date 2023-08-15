@@ -93,6 +93,14 @@ def deleteArticulo(nombre):
     conn.commit()
     conn.close()
 
+def deleteAutor_Articulo(articulo):
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction = f"DELETE FROM autor_articulo WHERE nombre_articulo='{articulo}'"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+
 def deleteArticulo_editorial(nombre):
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()

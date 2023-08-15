@@ -112,7 +112,7 @@ class IMain:
         
         self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.insertarArticulo)
         self.insertArticulo_button.pack(pady=10)
-        self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2)
+        self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.deleteArticulo)
         self.deleteArticulo_button.pack(pady=10)
         
         self.window.mainloop()
@@ -288,3 +288,27 @@ class IMain:
                 self.editorial_text.set(editorial)
         except TclError:
             pass
+    
+    def deleteArticulo(self):
+        if self.articuloName_text.get() != '' and self.edicion_text.get() != '' and self.año_text.get() != '' and self.lugar_text.get() != '' and self.editorial_text.get() != '' and self.autores_text.get() != '':
+            if messagebox.askyesno(title='Eliminar',message='¿Seguro que desea eliminar?'):
+                articulo = Articulos.Articulos(self.articuloName_text.get(),self.año_text.get(),self.edicion_text.get(),self.lugar_text.get(),self.editorial_text.get())
+                try:
+                    articulo.Delete_autor_articulo()
+                    articulo.Delete()
+                    messagebox.showinfo(title='Eliminar',message='Eliminado con exito')
+                    self.articuloName_text.delete(0,END)
+                    self.año_text.delete(0,END)
+                    self.lugar_text.delete(0,END)
+                    self.edicion_text.delete(0,END)
+                    self.editorial_text.set('')
+                    partes = self.autores_text.get().split()
+                    articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
+                    self.list_articulos.delete(0,END)
+                    for index in range(len(articulos)):
+                        self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+                except Exception:
+                    messagebox.showerror(title='Eliminar',message='Error al eliminar')
+        else:
+            messagebox.showerror(title='Eliminar',message='Error, faltan campos')
+                        

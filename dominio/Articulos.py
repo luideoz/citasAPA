@@ -17,3 +17,6 @@ class Articulos:
     
     def insertArticulo_autor(self,nombreA,apellidoA):
         DBManager.InsertAutor_Articulo(nombreA=nombreA,apellidoA=apellidoA, articulo=self.nombre)
+    
+    def Delete_autor_articulo(self):
+        DBManager.deleteAutor_Articulo(self.nombre)
