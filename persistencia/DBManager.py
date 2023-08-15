@@ -155,7 +155,7 @@ def selectEditoriales():
 def selectArticulos():
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
-    instruccion = "SELECT * FROM articulos ORDER BY nombre"
+    instruccion = "SELECT nombre FROM articulos ORDER BY nombre"
     cursor.execute(instruccion)
     datos = cursor.fetchall() #para devolver la lista con los campos
     conn.commit()
