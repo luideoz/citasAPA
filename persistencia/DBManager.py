@@ -175,7 +175,7 @@ def selectArticulos_Autor(nombreA,apellidoA):
 def selectArticulosCompletos(nombre):
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
-    instruccion = f"SELECT año,edicion,nombreA,apellidoA,editorial FROM articulos WHERE nombre='{nombre}' ORDER BY nombre"
+    instruccion = f"SELECT año,Edicion,lugar,editorial FROM articulos WHERE nombre='{nombre}' ORDER BY nombre"
     cursor.execute(instruccion)
     datos = cursor.fetchall() #para devolver la lista con los campos
     conn.commit()

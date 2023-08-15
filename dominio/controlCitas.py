@@ -18,7 +18,7 @@ def selectEditoriales():
     editoriales_procesado = []
     
     for index in range(len(editoriales)):
-        editorial = editoriales[index]
+        editorial = editoriales[index][0]
         editoriales_procesado.append(editorial)
     
     return editoriales_procesado
@@ -28,7 +28,7 @@ def selectArticulos_Autor(nombre,apellido):
     articulos_procesados = []
     
     for index in range(len(articulos)):
-        articulo = articulos[index]
+        articulo = articulos[index][0]
         articulos_procesados.append(articulo)
     
     return articulos_procesados
@@ -43,8 +43,8 @@ def selectArticulos():
 
 def selectArticulos_Completos(nombre):
     articulos = DBManager.selectArticulosCompletos(nombre=nombre)
-    año,edicion,nombreA,apellidoA,editorial = articulos[0]
-    return año,edicion,nombreA,apellidoA,editorial
+    año,edicion,lugar,editorial = articulos[0]
+    return año,edicion,lugar,editorial
 
 def crearCita(nombre,rango):
     articulos = DBManager.selectArticulosCompletos(nombre=nombre)

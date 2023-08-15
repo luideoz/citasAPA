@@ -81,6 +81,7 @@ class IMain:
         self.list_articulos = Listbox(self.articulos_frame, fg='black',bg='white',font=('Comic Sans',20),height=50,width=20)
         self.list_articulos.pack(side='left',anchor='w',padx=0,pady=0)
         
+        self.list_articulos.bind("<<ListboxSelect>>",self.rellenarCampos_Articulo)
         self.articuloName_label = Label(self.articulos_frame, text='Nombre',font=('Comic Sans',20),bg='pink',fg='black')
         self.articuloName_label.pack()
         self.articuloName_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
@@ -259,10 +260,31 @@ class IMain:
             messagebox.showerror(title='Insertar',message='Error.Faltan campos')
     
     def rellenarArticulo(self,event):
-        nombre_apellido = self.autores_text.get()
-        if nombre_apellido:
-            partes = nombre_apellido.split()
-            self.list_articulos.delete(0,END)
-            articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
-            for index in range(len(articulos)):
-                self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+        try:
+            nombre_apellido = self.autores_text.get()
+            if nombre_apellido:
+                partes = nombre_apellido.split()
+                self.list_articulos.delete(0,END)
+                articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
+                for index in range(len(articulos)):
+                    self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+        except Exception:
+            pass
+    
+    def rellenarCampos_Articulo(self,event):
+        try:
+            if self.list_articulos.curselection() != '':
+                self.articuloName_text.delete(0,END)
+                self.año_text.delete(0,END)
+                self.edicion_text.delete(0,END)
+                self.lugar_text.delete(0,END)
+                self.editorial_text.set('')
+                nombre = self.list_articulos.get(self.list_articulos.curselection())
+                año,edicion,lugar,editorial = controlCitas.selectArticulos_Completos(nombre=nombre)
+                self.articuloName_text.insert(0,nombre)
+                self.año_text.insert(0,año)
+                self.edicion_text.insert(0,edicion)
+                self.lugar_text.insert(0,lugar)
+                self.editorial_text.set(editorial)
+        except TclError:
+            pass
