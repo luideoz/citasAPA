@@ -115,6 +115,34 @@ class IMain:
         self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.deleteArticulo)
         self.deleteArticulo_button.pack(pady=10)
         
+        #**CITAS FRAME**
+        self.information_label = Label(self.citas_frame, text='Introduzca el rango de paginas si es necesario y seleccione el articulo',font=('Comic Sans',15),bg='pink',fg='black')
+        self.information_label.pack(side='top')
+        
+        self.rango_label = Label(self.citas_frame, text='Rango de paginas',font=('Comic Sans',20),bg='pink',fg='black')
+        self.rango_label.pack(pady=20)
+        
+        self.rango_text = Entry(self.citas_frame, bg='white', fg='black', font=('Comic Sans',20))
+        self.rango_text.pack(pady=10)
+        
+        self.articulos_label = Label(self.citas_frame, text='Articulos',font=('Comic Sans',20),bg='pink',fg='black')
+        self.articulos_label.pack(pady=10)
+        
+        articulos = controlCitas.selectArticulos()
+        self.combo_articulos = ttk.Combobox(self.citas_frame, font=('Comic Sans',20),foreground='black',background='white',values=articulos,state='readonly')
+        self.combo_articulos.pack(pady=15)   
+        
+        self.cita = StringVar()
+        
+        self.cita_label = Label(self.citas_frame, font=('Comic Sans',15),bg='white',fg='black',textvariable=self.cita,width=40)
+        self.cita_label.pack(pady=15)
+        
+        self.generate_button = Button(self.citas_frame, text='Generar cita',font=('Comic Sans',20),bg='white',fg='black',width=25,height=3,command=self.crearCita)
+        self.generate_button.pack(pady=20)
+        
+        self.copy_button = Button(self.citas_frame, text='Copiar cita', font=('Comic Sans',20), fg='black',bg='white',width=25,height=3,command=self.copyCita)
+        self.copy_button.pack(pady=20)
+        
         self.window.mainloop()
     
     def introducirAutor(self):
@@ -311,4 +339,17 @@ class IMain:
                     messagebox.showerror(title='Eliminar',message='Error al eliminar')
         else:
             messagebox.showerror(title='Eliminar',message='Error, faltan campos')
+            
+    def copyCita(self):
+        texto = self.cita.get()
+        pyperclip.copy(texto)
+        messagebox.showinfo(title='Copiar',message='Copiado')
+    
+    def crearCita(self):
+        nombreArticulo = self.combo_articulos.get()
+        try:
+            cita = controlCitas.crearCita(nombre=nombreArticulo,rango=self.rango_text.get())
+            self.cita.set(cita)
+        except IndexError:
+            messagebox.showerror(title='Generar cita', message='No hay articulo seleccionado')
                         

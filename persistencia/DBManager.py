@@ -190,6 +190,16 @@ def selectArticulosCompletos(nombre):
     conn.close()
     return datos
 
+def selectAutor_Articulo_Completo(articulo):
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruccion = f"SELECT nombre_autor, apellido_autor FROM autor_articulo WHERE nombre_articulo='{articulo}' ORDER BY apellido_autor"
+    cursor.execute(instruccion)
+    datos = cursor.fetchall() #para devolver la lista con los campos
+    conn.commit()
+    conn.close()
+    return datos
+
     
 
     

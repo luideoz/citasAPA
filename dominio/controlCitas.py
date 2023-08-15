@@ -48,12 +48,25 @@ def selectArticulos_Completos(nombre):
 
 def crearCita(nombre,rango):
     articulos = DBManager.selectArticulosCompletos(nombre=nombre)
-    año,edicion,nombreA,apellidoA,editorial = articulos[0]
-    if rango != '':
-        cita = apellidoA + ' ' + nombreA + '.(' + str(año) + ').' + nombre + rango + '.' + editorial
+    año,edicion,lugar,editorial = articulos[0]
+    autor_articulos = DBManager.selectAutor_Articulo_Completo(articulo=nombre)
+    cita = ''
+    
+    if len(autor_articulos) <= 2:
+        for index in range(len(autor_articulos)):
+            cita += autor_articulos[index][1].upper()
+            cita += ' '+autor_articulos[index][0].upper() + ','
     else:
-         cita = apellidoA + ' ' + nombreA + '.(' + str(año) + ').' + nombre +  '.' + editorial
+        cita += autor_articulos[0][1].upper()
+        cita += ' '+autor_articulos[0][0].upper() +'et al.'
+    
+    if rango == '':
+        cita += nombre + ',' + lugar + ',' + editorial + ',' + str(año)
+    else:
+        cita += nombre + ',' + rango + ',' +lugar + ',' + editorial + ',' + str(año)
+    
     return cita
+        
 
 def deleteAll():
     DBManager.deleteAll()
