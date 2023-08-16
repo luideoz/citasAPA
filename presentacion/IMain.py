@@ -246,6 +246,9 @@ class IMain:
                     self.editorial_text.config(values=editoriales)
                     for index in range(len(editoriales)):
                         self.list_editorial.insert(self.list_editorial.size(),editoriales[index])
+                    editorial.deleteArticulo()
+                    
+                    
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Error al eliminar')
         else:

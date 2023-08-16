@@ -46,6 +46,16 @@ def selectArticulos_Completos(nombre):
     año,edicion,lugar,editorial = articulos[0]
     return año,edicion,lugar,editorial
 
+def selectArticulos_editorial(editorial):
+    articulos = editorial.selectArticulos()
+    
+    articulos_procesados = []
+    
+    for index in range(len(articulos)):
+        articulos_procesados.append(articulos[index][0])
+    
+    return articulos_procesados
+
 def selectDistinctArticulos():
     articulos1 = DBManager.selectArticulos()
     

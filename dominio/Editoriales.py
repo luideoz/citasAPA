@@ -12,3 +12,9 @@ class Editoriales:
     
     def deleteArticulo(self):
         DBManager.deleteArticulo_editorial(self.nombre)
+    
+    def selectArticulos(self):
+        DBManager.selectArticulo_editorial(self.nombre)
+        
+    def deleteArticulos_editorial(self,articulos):
+        DBManager.deleteArticulos_Editorial(articulos=articulos)

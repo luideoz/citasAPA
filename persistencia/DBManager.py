@@ -115,6 +115,14 @@ def deleteArticulo_editorial(nombre):
     conn.commit()
     conn.close()
 
+def deleteArticulos_Editorial(articulos):
+    conn =sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction = "DELETE FROM autor_articulo WHERE articulo=?"
+    cursor.executemany(instruction,articulos)
+    conn.commit()
+    conn.close() 
+
 def deleteAll():
     conn = sql.connect('articulos.db')
     cursor = conn.cursor()
@@ -210,6 +218,16 @@ def selectAutor_Articulo_Completo(articulo):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
     instruccion = f"SELECT nombre_autor, apellido_autor FROM autor_articulo WHERE nombre_articulo='{articulo}' ORDER BY apellido_autor"
+    cursor.execute(instruccion)
+    datos = cursor.fetchall() #para devolver la lista con los campos
+    conn.commit()
+    conn.close()
+    return datos
+
+def selectArticulo_editorial(editorial):
+    conn = sql.connect('articulos.db')
+    cursor = conn.cursor()
+    instruccion = f"SELECT nombre FROM articulos WHERE editorial='{editorial}'"
     cursor.execute(instruccion)
     datos = cursor.fetchall() #para devolver la lista con los campos
     conn.commit()
