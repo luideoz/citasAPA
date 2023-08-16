@@ -46,6 +46,25 @@ def selectArticulos_Completos(nombre):
     año,edicion,lugar,editorial = articulos[0]
     return año,edicion,lugar,editorial
 
+def selectDistinctArticulos():
+    articulos1 = DBManager.selectArticulos()
+    
+    articulos = []
+    
+    for index in range(len(articulos1)):
+        articulos.append(articulos1[index][0])
+        
+    articulos2 = DBManager.selectArticulo_autor()
+    articulos_autor = []
+    
+    for index in range(len(articulos2)):
+        articulos_autor.append(articulos2[index][0])
+    
+    articulos_faltantes = [articulo for articulo in articulos if articulo not in articulos_autor]
+    
+    return articulos_faltantes
+    
+
 def crearCita(nombre,rango):
     articulos = DBManager.selectArticulosCompletos(nombre=nombre)
     año,edicion,lugar,editorial = articulos[0]

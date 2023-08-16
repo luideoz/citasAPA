@@ -194,7 +194,12 @@ class IMain:
                     self.autores_text.config(values=autores)
                     self.subname_text.delete(0,END)
                     autor.deleteArticulo()
-                    
+                    articulos_distintos = controlCitas.selectDistinctArticulos()
+                    if articulos_distintos != []:
+                        for index in range(len(articulos_distintos)):
+                            año,edicion,lugar,editorial = controlCitas.selectArticulos_Completos(nombre=articulos_distintos[index])
+                            articulo= Articulos.Articulos(articulos_distintos[index],año,edicion,lugar,editorial)
+                            articulo.Delete()
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Se ha producido un error')
         else:
