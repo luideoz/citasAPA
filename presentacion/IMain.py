@@ -193,6 +193,8 @@ class IMain:
                     self.name_text.delete(0,END)
                     self.autores_text.config(values=autores)
                     self.subname_text.delete(0,END)
+                    autor.deleteArticulo()
+                    
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Se ha producido un error')
         else:

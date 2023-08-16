@@ -61,9 +61,7 @@ def createEditoriales():
 def createAutor_Articulo():
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
-    instruction = "PRAGMA foreign_keys = ON"
-    cursor.execute(instruction)
-    instruction = "CREATE TABLE autor_articulo (nombre_autor TEXT, apellido_autor TEXT,nombre_articulo TEXT,PRIMARY KEY (nombre_autor, apellido_autor, nombre_articulo),FOREIGN KEY (nombre_autor, apellido_autor) REFERENCES autores(nombre, apellido),FOREIGN KEY (nombre_articulo) REFERENCES articulos(nombre))"
+    instruction = "CREATE TABLE autor_articulo (nombreA TEXT, apellidoA TEXT, articulo TEXT,PRIMARY KEY (nombreA, apellidoA, articulo),FOREIGN KEY (nombreA, apellidoA) REFERENCES autores(nombre, apellido),FOREIGN KEY (articulo) REFERENCES articulos(nombre))"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -96,7 +94,15 @@ def deleteArticulo(nombre):
 def deleteAutor_Articulo(articulo):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
-    instruction = f"DELETE FROM autor_articulo WHERE nombre_articulo='{articulo}'"
+    instruction = f"DELETE FROM autor_articulo WHERE articulo='{articulo}'"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+    
+def deleteAutor_Articulo_autores(nombreA,apellidoA):
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruction = f"DELETE FROM autor_articulo WHERE nombreA='{nombreA}' AND apellidoA='{apellidoA}'"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -170,6 +176,16 @@ def selectArticulos():
     conn.close()
     return datos
 
+def selectArticulo_autor():
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruccion = "SELECT articulo FROM autor_articulo ORDER BY articulo"
+    cursor.execute(instruccion)
+    datos = cursor.fetchall() #para devolver la lista con los campos
+    conn.commit()
+    conn.close()
+    return datos
+
 def selectArticulos_Autor(nombreA,apellidoA):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
@@ -199,6 +215,8 @@ def selectAutor_Articulo_Completo(articulo):
     conn.commit()
     conn.close()
     return datos
+
+
 
     
 

@@ -13,4 +13,4 @@ class Autores:
         DBManager.deleteAutor(self.nombre,self.apellido)
     
     def deleteArticulo(self):
-        DBManager.deleteArticulo_autor(self.nombre, self.apellido)
+        DBManager.deleteAutor_Articulo_autores(self.nombre, self.apellido)
