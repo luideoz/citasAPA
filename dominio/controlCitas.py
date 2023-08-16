@@ -122,7 +122,7 @@ def crearCita(nombre,rango):
             cita += ' '+autor_articulos[index][0].upper() + ','
     else:
         cita += autor_articulos[0][1].upper()
-        cita += ' '+autor_articulos[0][0].upper() +'et al.'
+        cita += ' '+autor_articulos[0][0].upper() +' et al.'
     
     if rango == '':
         cita += nombre + ',' + lugar + ',' + editorial + ',' + str(año)
