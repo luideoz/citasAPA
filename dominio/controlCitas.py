@@ -33,6 +33,15 @@ def selectArticulos_Autor(nombre,apellido):
     
     return articulos_procesados
 
+def selectArticulo_autor():
+    articulos = DBManager.selectArticulo_autor()
+    
+    articulos_procesados = []
+    
+    for index in range(len(articulos)):
+        articulos_procesados.append(articulos[index][0])
+    return articulos_procesados
+
 def selectArticulos():
     articulos = DBManager.selectArticulos()
     articulos_procesados = []
@@ -56,6 +65,13 @@ def selectArticulos_editorial(editorial):
     
     return articulos_procesados
 
+def selectAutor_Articulo_completo(nombre):
+    nombreA,apellidoA = DBManager.selectAutor_Articulo_Completo(nombre)[0]
+    return nombreA,apellidoA
+
+def deleteAutor_Articulo(articulo):
+    DBManager.deleteAutor_Articulo(articulo=articulo)
+
 def selectDistinctArticulos():
     articulos1 = DBManager.selectArticulos()
     
@@ -73,6 +89,25 @@ def selectDistinctArticulos():
     articulos_faltantes = [articulo for articulo in articulos if articulo not in articulos_autor]
     
     return articulos_faltantes
+
+def selectDistinctArticulos_editorial():
+    articulos1 = DBManager.selectArticulo_autor2()
+    articulos_autor = []
+    
+    for index in range(len(articulos1)):
+        articulos_autor.append(articulos1[index][0])
+    
+    articulos2 = DBManager.selectArticulos()
+    articulos = []
+    
+    for index in range(len(articulos2)):
+        articulos.append(articulos2[index][0])
+    
+    articulos_faltantes = [articulo for articulo in articulos_autor if articulo not in articulos]
+    
+    return articulos_faltantes
+    
+    
     
 
 def crearCita(nombre,rango):

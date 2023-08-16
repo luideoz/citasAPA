@@ -247,7 +247,10 @@ class IMain:
                     for index in range(len(editoriales)):
                         self.list_editorial.insert(self.list_editorial.size(),editoriales[index])
                     editorial.deleteArticulo()
-                    
+                    articulos_faltantes = controlCitas.selectDistinctArticulos_editorial()
+                    if articulos_faltantes != []:
+                        for index in range(len(articulos_faltantes)):
+                            controlCitas.deleteAutor_Articulo(articulos_faltantes[index])
                     
                 except Exception:
                     messagebox.showerror(title='Eliminar',message='Error al eliminar')
@@ -270,6 +273,9 @@ class IMain:
                         self.editorial_text.set('')
                         articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
                         self.list_articulos.delete(0,END)
+                        articulos2 = controlCitas.selectArticulo_autor()
+                        self.combo_articulos['values'] = []
+                        self.combo_articulos.config(values=articulos2)
                         for index in range(len(articulos)):
                             self.list_articulos.insert(self.list_articulos.size(),articulos[index])
                     except Exception:
@@ -343,6 +349,9 @@ class IMain:
                     partes = self.autores_text.get().split()
                     articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
                     self.list_articulos.delete(0,END)
+                    articulos2 = controlCitas.selectArticulo_autor()
+                    self.combo_articulos['values'] = []
+                    self.combo_articulos.config(values=articulos2)
                     for index in range(len(articulos)):
                         self.list_articulos.insert(self.list_articulos.size(),articulos[index])
                 except Exception:

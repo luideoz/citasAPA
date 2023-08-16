@@ -194,6 +194,16 @@ def selectArticulo_autor():
     conn.close()
     return datos
 
+def selectArticulo_autor2():
+    conn = sql.connect('autor_articulo.db')
+    cursor = conn.cursor()
+    instruccion = "SELECT DISTINCT articulo FROM autor_articulo ORDER BY articulo"
+    cursor.execute(instruccion)
+    datos = cursor.fetchall() #para devolver la lista con los campos
+    conn.commit()
+    conn.close()
+    return datos
+
 def selectArticulos_Autor(nombreA,apellidoA):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
@@ -203,6 +213,7 @@ def selectArticulos_Autor(nombreA,apellidoA):
     conn.commit()
     conn.close()
     return datos
+
 
 def selectArticulosCompletos(nombre):
     conn = sql.connect('articulos.db')
@@ -217,7 +228,7 @@ def selectArticulosCompletos(nombre):
 def selectAutor_Articulo_Completo(articulo):
     conn = sql.connect('autor_articulo.db')
     cursor = conn.cursor()
-    instruccion = f"SELECT nombre_autor, apellido_autor FROM autor_articulo WHERE nombre_articulo='{articulo}' ORDER BY apellido_autor"
+    instruccion = f"SELECT nombreA, apellidoA FROM autor_articulo WHERE articulo='{articulo}' ORDER BY apellidoA"
     cursor.execute(instruccion)
     datos = cursor.fetchall() #para devolver la lista con los campos
     conn.commit()
