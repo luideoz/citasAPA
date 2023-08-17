@@ -298,6 +298,9 @@ class IMain:
                         self.list_articulos.delete(0,END)
                         for index in range(len(articulos)):
                             self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+                        articulos2 = controlCitas.selectArticulo_autor()
+                        self.combo_articulos['values'] = []
+                        self.combo_articulos.config(values=articulos2)
                     except Exception:
                         messagebox.showerror(title='Insertar',message='Ha ocurrido un error')
         else:
