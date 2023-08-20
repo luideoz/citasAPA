@@ -337,7 +337,7 @@ class IMain:
     
     def rellenarCampos_Articulo(self,event):
         try:
-            if self.list_articulos.curselection() != '':
+            if self.list_articulos.curselection() != '' and self.list_articulos.size() > 0:
                 self.articuloName_text.delete(0,END)
                 self.año_text.delete(0,END)
                 self.edicion_text.delete(0,END)
@@ -350,7 +350,7 @@ class IMain:
                 self.edicion_text.insert(0,edicion)
                 self.lugar_text.insert(0,lugar)
                 self.editorial_text.set(editorial)
-        except TclError:
+        except Exception:
             pass
     
     def deleteArticulo(self):
