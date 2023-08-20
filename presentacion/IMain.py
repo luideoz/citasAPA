@@ -309,12 +309,29 @@ class IMain:
     def rellenarArticulo(self,event):
         try:
             nombre_apellido = self.autores_text.get()
+            self.autores_text.delete(0,END)
+            articulo = self.articuloName_text.get()
+            self.articuloName_text.delete(0,END)
+            año = self.año_text.get()
+            self.año_text.delete(0,END)
+            lugar = self.lugar_text.get()
+            self.lugar_text.delete(0,END)
+            edicion = self.edicion_text.get()
+            self.edicion_text.delete(0,END)
+            editorial = self.editorial_text.get()
+            self.editorial_text.delete(0,END)
             if nombre_apellido:
                 partes = nombre_apellido.split()
                 self.list_articulos.delete(0,END)
                 articulos = controlCitas.selectArticulos_Autor(partes[1],partes[0])
                 for index in range(len(articulos)):
                     self.list_articulos.insert(self.list_articulos.size(),articulos[index])
+                self.articuloName_text.insert(0,articulo)
+                self.año_text.insert(0,año)
+                self.lugar_text.insert(0,lugar)
+                self.edicion_text.insert(0,edicion)
+                self.editorial_text.set(editorial)
+                return
         except Exception:
             pass
     
