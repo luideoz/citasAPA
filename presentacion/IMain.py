@@ -8,10 +8,14 @@ import pyperclip
 class IMain:
     def __init__(self):
         
+        
         self.window = Tk()
         self.window.title('APA Creator')
         self.window.geometry('720x720')
         self.window.config(bg = 'pink')
+        self.window.resizable(height=False,width=False)
+        kitty = PhotoImage(file='/home/luis/Descargas/icons8-hello-kitty-doodle/icons8-hello-kitty-48.png')
+        kitty2 = PhotoImage(file='/home/luis/Descargas/icons8-hello-kitty-bubbles/icons8-hello-kitty-50.png')
         
         self.tabs = ttk.Notebook(self.window)
         
@@ -33,7 +37,7 @@ class IMain:
         self.tabs.pack(fill='both', expand=True)
         
         #**FRAME AUTORES**
-        self.list_autores = Listbox(self.autores_frame, bg='white', fg='black', font=('Comic Sans',15),height=50,width=25)
+        self.list_autores = Listbox(self.autores_frame, bg='white', fg='black', font=('Garamond',15),height=50,width=25)
         self.list_autores.pack(side='left',anchor='nw',padx=0,pady=0)
         autores = controlCitas.selectAutores()
         
@@ -44,22 +48,22 @@ class IMain:
         self.list_autores.bind("<<ListboxSelect>>",self.rellenarAutores)
         
         
-        self.name_label = Label(self.autores_frame, text='Nombre', font=('Comic Sans',20), fg='black',bg='pink')
+        self.name_label = Label(self.autores_frame, text='Nombre', font=('Garamond',20), fg='black',bg='pink')
         self.name_label.pack(padx=10,pady=10)
-        self.name_text = Entry(self.autores_frame, font= ('Comic Sans',20),width=20,bg='white',fg='black')
+        self.name_text = Entry(self.autores_frame, font= ('Garamond',20),width=20,bg='white',fg='black')
         self.name_text.pack(pady=12,padx=10)
-        self.subname_label = Label(self.autores_frame,text='Apellidos',bg='pink',fg='black',font=('Comic Sans',20))
+        self.subname_label = Label(self.autores_frame,text='Apellidos',bg='pink',fg='black',font=('Garamond',20))
         self.subname_label.pack(padx=10,pady=20)
-        self.subname_text = Entry(self.autores_frame,font=('Comic Sans',20),bg='white',fg='black',width=20)
+        self.subname_text = Entry(self.autores_frame,font=('Garamond',20),bg='white',fg='black',width=20)
         self.subname_text.pack()
         
-        self.insert_buttom = Button(self.autores_frame,text='Introducir',font=('Comic Sans',20),bg='white',fg='black',width=20,height=3,command=self.introducirAutor)
+        self.insert_buttom = Button(self.autores_frame,text='Introducir',font=('Garamond',20),bg='white',fg='black',height=80,command=self.introducirAutor,image=kitty,compound='left')
         self.insert_buttom.pack(pady=50)
-        self.delete_buttom = Button(self.autores_frame,text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',height=3,width=20,command=self.eliminarAutor)
+        self.delete_buttom = Button(self.autores_frame,text='Eliminar',font=('Garamond',20),bg='white',fg='black',height=85,command=self.eliminarAutor,image=kitty2,compound='left')
         self.delete_buttom.pack()
         
         #***EDITORIALES FRAME***
-        self.list_editorial = Listbox(self.editoriales_frame, fg='black',bg='white',font=('Comic Sans',15),height=50,width=25)
+        self.list_editorial = Listbox(self.editoriales_frame, fg='black',bg='white',font=('Garamond',15),height=50,width=25)
         self.list_editorial.pack(side='left',anchor='nw',padx=0,pady=0)
         
         self.list_editorial.bind("<<ListboxSelect>>",self.rellenarEditorial)
@@ -68,79 +72,79 @@ class IMain:
         for index in range(len(editoriales)):
             self.list_editorial.insert(self.list_editorial.size(),editoriales[index])
         
-        self.nombreEditorial_label = Label(self.editoriales_frame, bg='pink',fg='black',font=('Comic Sans',20),text='Nombre')
+        self.nombreEditorial_label = Label(self.editoriales_frame, bg='pink',fg='black',font=('Garamond',20),text='Nombre')
         self.nombreEditorial_label.pack(padx=10,pady=10)
-        self.nombreEditorial_text = Entry(self.editoriales_frame, fg='black',bg='white',font=('Comic Sans',20))
+        self.nombreEditorial_text = Entry(self.editoriales_frame, fg='black',bg='white',font=('Garamond',20))
         self.nombreEditorial_text.pack(padx=10,pady=12)
-        self.insertEditorial_button = Button(self.editoriales_frame,text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=20,height=3,command=self.insertEditorial)
+        self.insertEditorial_button = Button(self.editoriales_frame,text='Insertar',font=('Garamond',20),bg='white',fg='black',height=85,command=self.insertEditorial,image=kitty,compound='left')
         self.insertEditorial_button.pack(pady=50)
-        self.deleteEditorial_button = Button(self.editoriales_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=20,height=3,command=self.deleteEditorial)
+        self.deleteEditorial_button = Button(self.editoriales_frame, text='Eliminar',font=('Garamond',20),bg='white',fg='black',height=80,command=self.deleteEditorial,image=kitty2,compound='left')
         self.deleteEditorial_button.pack()
         
         #***ARTICULOS FRAME***
-        self.list_articulos = Listbox(self.articulos_frame, fg='black',bg='white',font=('Comic Sans',20),height=50,width=20)
+        self.list_articulos = Listbox(self.articulos_frame, fg='black',bg='white',font=('Garamond',20),height=50,width=20)
         self.list_articulos.pack(side='left',anchor='w',padx=0,pady=0)
         
         self.list_articulos.bind("<<ListboxSelect>>",self.rellenarCampos_Articulo)
-        self.articuloName_label = Label(self.articulos_frame, text='Nombre',font=('Comic Sans',20),bg='pink',fg='black')
+        self.articuloName_label = Label(self.articulos_frame, text='Nombre',font=('Garamond',20),bg='pink',fg='black')
         self.articuloName_label.pack()
-        self.articuloName_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.articuloName_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Garamond',20))
         self.articuloName_text.pack()
-        self.edicion_label = Label(self.articulos_frame, text='Edicion',font=('Comic Sans',20),bg='pink',fg='black')
+        self.edicion_label = Label(self.articulos_frame, text='Edicion',font=('Garamond',20),bg='pink',fg='black')
         self.edicion_label.pack()
-        self.edicion_text = Entry(self.articulos_frame, bg='white', fg='black', font=('Comic Sans',20))
+        self.edicion_text = Entry(self.articulos_frame, bg='white', fg='black', font=('Garamond',20))
         self.edicion_text.pack()
-        self.año_label = Label(self.articulos_frame, text='Año',font=('Comic Sans',20),bg='pink',fg='black')
+        self.año_label = Label(self.articulos_frame, text='Año',font=('Garamond',20),bg='pink',fg='black')
         self.año_label.pack()
-        self.año_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.año_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Garamond',20))
         self.año_text.pack()
-        self.lugar_label = Label(self.articulos_frame, text='Lugar de edicion', font=('Comic Sans',20),bg='pink',fg='black')
+        self.lugar_label = Label(self.articulos_frame, text='Lugar de edicion', font=('Garamond',20),bg='pink',fg='black')
         self.lugar_label.pack()
-        self.lugar_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Comic Sans',20))
+        self.lugar_text = Entry(self.articulos_frame, bg='white',fg='black',font=('Garamond',20))
         self.lugar_text.pack()
-        self.editorial_label = Label(self.articulos_frame,text='Editorial',bg='pink',fg='black',font=('Comic Sans',20))
+        self.editorial_label = Label(self.articulos_frame,text='Editorial',bg='pink',fg='black',font=('Garamond',20))
         self.editorial_label.pack()
         editoriales = controlCitas.selectEditoriales()
-        self.editorial_text = ttk.Combobox(self.articulos_frame, foreground='black',background='white',font=('Comic Sans',20),values=editoriales,state='readonly')
+        self.editorial_text = ttk.Combobox(self.articulos_frame, foreground='black',background='white',font=('Garamond',20),values=editoriales,state='readonly')
         self.editorial_text.pack()
-        self.autores_label = Label(self.articulos_frame, font=('Comic Sans',20),bg='pink',fg='black',text='Autor')
+        self.autores_label = Label(self.articulos_frame, font=('Garamond',20),bg='pink',fg='black',text='Autor')
         self.autores_label.pack()
         autores = controlCitas.selectAutores()
-        self.autores_text = ttk.Combobox(self.articulos_frame, font=('Comic Sans',20),background='white',foreground='black',values=autores, state='readonly')
+        self.autores_text = ttk.Combobox(self.articulos_frame, font=('Garamond',20),background='white',foreground='black',values=autores, state='readonly')
         self.autores_text.pack()
         self.autores_text.bind("<<ComboboxSelected>>",self.rellenarArticulo)
         
-        self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.insertarArticulo)
+        self.insertArticulo_button = Button(self.articulos_frame, text='Insertar',font=('Garamond',20),bg='white',fg='black',height=85,command=self.insertarArticulo,image=kitty,compound='left')
         self.insertArticulo_button.pack(pady=10)
-        self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Comic Sans',20),bg='white',fg='black',width=25,height=2,command=self.deleteArticulo)
+        self.deleteArticulo_button = Button(self.articulos_frame, text='Eliminar',font=('Garamond',20),bg='white',fg='black',height=80,command=self.deleteArticulo,image=kitty2,compound='left')
         self.deleteArticulo_button.pack(pady=10)
         
         #**CITAS FRAME**
-        self.information_label = Label(self.citas_frame, text='Introduzca el rango de paginas si es necesario y seleccione el articulo',font=('Comic Sans',15),bg='pink',fg='black')
+        self.information_label = Label(self.citas_frame, text='Introduzca el rango de paginas si es necesario y seleccione el articulo',font=('Garamond',15),bg='pink',fg='black')
         self.information_label.pack(side='top')
         
-        self.rango_label = Label(self.citas_frame, text='Rango de paginas',font=('Comic Sans',20),bg='pink',fg='black')
+        self.rango_label = Label(self.citas_frame, text='Rango de paginas',font=('Garamond',20),bg='pink',fg='black')
         self.rango_label.pack(pady=20)
         
-        self.rango_text = Entry(self.citas_frame, bg='white', fg='black', font=('Comic Sans',20))
+        self.rango_text = Entry(self.citas_frame, bg='white', fg='black', font=('Garamond',20))
         self.rango_text.pack(pady=10)
         
-        self.articulos_label = Label(self.citas_frame, text='Articulos',font=('Comic Sans',20),bg='pink',fg='black')
+        self.articulos_label = Label(self.citas_frame, text='Articulos',font=('Garamond',20),bg='pink',fg='black')
         self.articulos_label.pack(pady=10)
         
         articulos = controlCitas.selectArticulos()
-        self.combo_articulos = ttk.Combobox(self.citas_frame, font=('Comic Sans',20),foreground='black',background='white',values=articulos,state='readonly')
+        self.combo_articulos = ttk.Combobox(self.citas_frame, font=('Garamond',20),foreground='black',background='white',values=articulos,state='readonly')
         self.combo_articulos.pack(pady=15)   
         
         self.cita = StringVar()
         
-        self.cita_label = Label(self.citas_frame, font=('Comic Sans',15),bg='white',fg='black',textvariable=self.cita,width=40)
+        self.cita_label = Label(self.citas_frame, font=('Garamond',15),bg='white',fg='black',textvariable=self.cita,width=40)
         self.cita_label.pack(pady=15)
         
-        self.generate_button = Button(self.citas_frame, text='Generar cita',font=('Comic Sans',20),bg='white',fg='black',width=25,height=3,command=self.crearCita)
+        self.generate_button = Button(self.citas_frame, text='Generar cita',font=('Garamond',20),bg='white',fg='black',height=85,command=self.crearCita,image=kitty,compound='left')
         self.generate_button.pack(pady=20)
         
-        self.copy_button = Button(self.citas_frame, text='Copiar cita', font=('Comic Sans',20), fg='black',bg='white',width=25,height=3,command=self.copyCita)
+        self.copy_button = Button(self.citas_frame, text='Copiar cita', font=('Garamond',20), fg='black',bg='white',height=80,command=self.copyCita,image=kitty2,compound='left')
         self.copy_button.pack(pady=20)
         
         self.window.mainloop()
